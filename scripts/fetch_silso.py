@@ -2,7 +2,7 @@ name: Fetch SILSO daily (Sunspot-Daily)
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # daily at 00:00 UTC
+    - cron: '0 0 * * *'
   workflow_dispatch: {}
 
 jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'  # match your local version
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
@@ -27,11 +27,6 @@ jobs:
 
       - name: Run fetch script
         run: python fetch_silso.py
-        # Optional environment variables if needed:
-        # env:
-        #   TARGET_FILENAME: Sunspot-Daily
-        #   ARCHIVE_DIR: data/archive
-        #   SILSO_URL: https://www.sidc.be/silso/INFO/sndtotcsv.php
 
       - name: Commit and push new data (if changed)
         env:
