@@ -28,6 +28,7 @@ jobs:
 
       - name: Run fetch script
         run: python ./scripts/fetch_silso.py
+        working-directory: ${{ github.workspace }}
         env:
           ARCHIVE_DIR: data/archive
           TARGET_FILENAME: Sunspot-Daily
