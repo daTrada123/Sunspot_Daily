@@ -27,7 +27,7 @@ jobs:
           python -m pip install requests
 
       - name: Run fetch_silso.py script
-        run: python ./scripts/fetch_silso.py
+        run: python ./SunSpot_Daily/scripts/fetch_silso.py
         env:
           ARCHIVE_DIR: data/archive
           TARGET_FILENAME: Sunspot-Daily
