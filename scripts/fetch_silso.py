@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -26,15 +26,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install requests
 
-      - name: Run fetch script
+      - name: Run fetch_silso.py script
         run: python ./scripts/fetch_silso.py
-        working-directory: ${{ github.workspace }}
         env:
           ARCHIVE_DIR: data/archive
           TARGET_FILENAME: Sunspot-Daily
           SILSO_URL: https://www.sidc.be/silso/INFO/sndtotcsv.php
 
-      - name: Commit and push new data (if changed)
+      - name: Commit and push updated CSV (if changed)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
