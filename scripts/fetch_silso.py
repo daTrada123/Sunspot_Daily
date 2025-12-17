@@ -2,12 +2,13 @@ name: Fetch SILSO daily (Sunspot-Daily)
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'  # daily at 00:00 UTC
   workflow_dispatch: {}
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -23,22 +24,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests
+          python -m pip install requests
 
       - name: Run fetch script
         run: python fetch_silso.py
+        env:
+          ARCHIVE_DIR: data/archive
+          TARGET_FILENAME: Sunspot-Daily
+          SILSO_URL: https://www.sidc.be/silso/INFO/sndtotcsv.php
 
       - name: Commit and push new data (if changed)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/Sunspot-Daily.csv || true
-          git add data/archive || true
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "chore(data): update Sunspot-Daily for $(date -u +%Y-%m-%d)"
-          git push
