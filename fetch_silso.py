@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 Download SILSO CSV and update data/<TARGET_FILENAME> when it changes.
-...
 """
 from __future__ import annotations
 import os
