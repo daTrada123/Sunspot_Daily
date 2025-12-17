@@ -27,10 +27,8 @@ jobs:
           python -m pip install requests
 
       - name: Run fetch script
-        run: python fetch_silso.py
+        run: python scripts/fetch_silso.py
         env:
           ARCHIVE_DIR: data/archive
           TARGET_FILENAME: Sunspot-Daily
-          SILSO_URL: https://www.sidc.be/silso/INFO/sndtotcsv.php
-
-      - name: Commit and push new data (if changed)
+          SI
