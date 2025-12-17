@@ -8,8 +8,6 @@ Behavior:
 - Writes to DATA_DIR (default: data).
 - Optionally archives previous copy to ARCHIVE_DIR if set (e.g. data/archive).
 - Only writes & causes a commit when content changes.
-
-Env vars:
 - SILSO_URL (default: https://www.sidc.be/silso/INFO/sndtotcsv.php)
 - DATA_DIR (default: data)
 - TARGET_FILENAME (default: Sunspot-Daily)
