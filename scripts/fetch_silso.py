@@ -31,4 +31,19 @@ jobs:
         env:
           ARCHIVE_DIR: data/archive
           TARGET_FILENAME: Sunspot-Daily
-          SI
+          SILSO_URL: https://www.sidc.be/silso/INFO/sndtotcsv.php
+
+      - name: Commit and push new data (if changed)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/Sunspot-Daily.csv || true
+          git add data/archive || true
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(data): update Sunspot-Daily for $(date -u +%Y-%m-%d)"
+          git push
