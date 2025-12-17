@@ -2,7 +2,7 @@ name: Fetch SILSO daily (Sunspot-Daily)
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # daily at 00:00 UTC; change if desired
+    - cron: '0 0 * * *'
   workflow_dispatch: {}
 
 jobs:
@@ -18,18 +18,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install requests
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
       - name: Run fetch script
-        env:
-          # Optional overrides:
-          # TARGET_FILENAME: Sunspot-Daily   # script will append .csv if missing
-          # ARCHIVE_DIR: data/archive
-          # SILSO_URL: https://www.sidc.be/silso/INFO/sndtotcsv.php
-        run: python scripts/fetch_silso.py
+        run: python fetch_silso.py
 
       - name: Commit and push new data (if changed)
         env:
@@ -37,7 +34,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Stage the expected file and archive if used
           git add data/Sunspot-Daily.csv || true
           git add data/archive || true
           if git diff --staged --quiet; then
